@@ -13,3 +13,5 @@ df = df.dropna(how='all', axis=1)
 
 # Display the cleaned dataframe head
 df.head()
+print(df.columns.tolist())
+df.head()
