@@ -1,0 +1,29 @@
+import pandas as pd
+
+# Define the function to read all sheets from an Excel file
+def read_all_sheets_from_excel(path: str) -> dict:
+    all_sheets = pd.read_excel(path, sheet_name=None)
+    return all_sheets
+
+# Read all sheets from the provided Excel file
+file_path = 'results.xlsx'
+dataframes = read_all_sheets_from_excel(file_path)
+
+# Print each dataframe name
+print('Dataframes in this file:', ', '.join(dataframes.keys()))
+
+# Clean and display the head of each dataframe
+for k, v in dataframes.items():
+    # Strip whitespace from column names
+    try:
+        v = v.rename(columns=lambda x: x.strip() if isinstance(x, str) else x)
+    except:
+        pass
+
+    # Strip whitespace from cells
+    try:
+        v = v.apply(lambda col: col.str.strip() if col.dtype == "object" else col)
+    except:
+        pass
+    dataframes[k] = v
+    print(v.head())
