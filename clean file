@@ -1,0 +1,15 @@
+import pandas as pd
+
+# Load the data
+file_path = 'results.xlsx'
+df = pd.read_excel(file_path, header=3)
+
+# Drop empty rows and columns that may have been created due to merged cells
+# Also, reset the index for clarity
+# Strip whitespace from column names
+df.columns = [c.strip() for c in df.columns if c.strip()]
+df = df.dropna(how='all', axis=0).reset_index(drop=True)
+df = df.dropna(how='all', axis=1)
+
+# Display the cleaned dataframe head
+df.head()
